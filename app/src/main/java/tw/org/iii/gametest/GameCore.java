@@ -591,9 +591,9 @@ public class GameCore {
             gamePointGrids.clear();gamePointGrids.add(0);gamePointGrids.add(-1);
             // 本回合有變動的棋格
             //Log.v("chiyu","judge grid" + board.gameRecode.getFirst().target); // trial run
-            if(isGameWin(board.gameRecode.getFirst().target)) return -1;
+            if(isGameWin(board.gameRecode.getLast().target)) return -1;
             //Log.v("chiyu","judge grid" + board.gameRecode.getFirst().destination); // trial run
-            if(isGameWin(board.gameRecode.getFirst().destination)) return -1;
+            if(isGameWin(board.gameRecode.getLast().destination)) return -1;
             // 移除墊底的數字
             gamePointGrids.remove(0);gamePointGrids.remove(-1);
             return gamePointGrids.size();
@@ -625,7 +625,7 @@ public class GameCore {
             }
             // 全部都一樣 勝利
             if(notSameGrid == 0) {
-                message = playerList.get(boardFaction[grid]).getName() + " is Winner!!!";
+                message = playerList.get((int)boardFaction[grid]).getName() + " is Winner!!!";
                 return true;
             }
             // 有不一樣的 就是 gamePoint
@@ -647,7 +647,8 @@ public class GameCore {
             }
             // 全部都一樣 勝利
             if(notSameGrid == 0) {
-                message = playerList.get(boardFaction[grid]).getName() + " is Winner!!!";
+                // Log.v("chiyu","" + playerList.get((int)boardFaction[grid]).getName());
+                message = playerList.get((int)boardFaction[grid]).getName() + " is Winner!!!";
                 return true;
             }
             // 有不一樣的 就是 gamePoint
@@ -674,7 +675,7 @@ public class GameCore {
                 }
                 // 全部都一樣 勝利
                 if(notSameGrid == 0) {
-                    message = playerList.get(boardFaction[grid]).getName() + " is Winner!!!";
+                    message = playerList.get((int)boardFaction[grid]).getName() + " is Winner!!!";
                     return true;
                 }
                 // 有不一樣的 就是 gamePoint
@@ -703,7 +704,7 @@ public class GameCore {
                 }
                 // 全部都一樣 勝利
                 if(notSameGrid == 0) {
-                    message = playerList.get(boardFaction[grid]).getName() + " is Winner!!!";
+                    message = playerList.get((int)boardFaction[grid]).getName() + " is Winner!!!";
                     return true;
                 }
                 // 有不一樣的 就是 gamePoint

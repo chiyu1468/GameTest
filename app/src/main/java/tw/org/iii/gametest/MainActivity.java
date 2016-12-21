@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
             else if(firstBtn - 100 <100) {
                 Log.v("chiyu","Orange New Piece : " + GC.playerMove("Orange",0,x,(byte)(firstBtn-100)));}
             else if(firstBtn - 200 <100) {
-                Log.v("chiyu","Blue New Piece : " + GC.playerMove("Blue",0,x,(byte)(firstBtn-100)));}
+                Log.v("chiyu","Blue New Piece : " + GC.playerMove("Blue",0,x,(byte)(firstBtn-200)));}
 
             if(firstBtn < 100) updateBtnShow(firstBtnId,firstBtn);
             updateBtnShow(v.getId(),Integer.parseInt(v.getTag().toString()));
@@ -95,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
     public void test1(View v){
         GC.GO();
         GC.TrailRun2();
+        tv.setText(GC.message);
     }
 
     public void test2(View v){
