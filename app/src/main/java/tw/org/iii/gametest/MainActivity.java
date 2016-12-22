@@ -17,20 +17,23 @@ public class MainActivity extends AppCompatActivity {
         tv = (TextView) findViewById(R.id.tv);
     }
 
+    int firstBtn = 0;
+    int firstBtnId;
+    String[] players = {"null","Orange","Blue"};
+    int player;
+
     GameCore GC;
     public void start(View v){
         GC = new GameCore();
         GC.GO();
         GC.addPlayer("Orange");
         GC.addPlayer("Blue");
-        GC.GO();
-        GC.TrailRun();
+        if(GC.GO().equals("Orange")) player = 1;
+        else player = 2;
+        tv.setText(GC.message);
+        //GC.TrailRun();
     }
 
-    int firstBtn = 0;
-    int firstBtnId;
-    String[] players = {"null","Orange","Blue"};
-    int player = 1;
 
     public void ChessClick(View v) {
         // 所有按鍵統一呼叫這個方法
@@ -42,16 +45,17 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Log.v("chiyu","Second Click");
             int x = Integer.parseInt(v.getTag().toString());
-            if(firstBtn < 100) {Log.v("chiyu","Move Piece : " + GC.playerMove(players[player],firstBtn,x));}
-            else if(firstBtn - 100 <100) {
-                Log.v("chiyu","Orange New Piece : " + GC.playerMove("Orange",0,x,(byte)(firstBtn-100)));}
-            else if(firstBtn - 200 <100) {
-                Log.v("chiyu","Blue New Piece : " + GC.playerMove("Blue",0,x,(byte)(firstBtn-200)));}
+            if(firstBtn < 100) {if(GC.playerMove(players[player],firstBtn,x)) player=(player==1?2:1);}
+            //{Log.v("chiyu","Move Piece : " + GC.playerMove(players[player],firstBtn,x));}
+            else if(firstBtn - 100 <100) {if(GC.playerMove("Orange",0,x,(byte)(firstBtn-100))) player=(player==1?2:1);}
+            //{Log.v("chiyu","Orange New Piece : " + GC.playerMove("Orange",0,x,(byte)(firstBtn-100)));}
+            else if(firstBtn - 200 <100) {if(GC.playerMove("Blue",0,x,(byte)(firstBtn-200))) player=(player==1?2:1);}
+            //{Log.v("chiyu","Blue New Piece : " + GC.playerMove("Blue",0,x,(byte)(firstBtn-200)));}
 
             if(firstBtn < 100) updateBtnShow(firstBtnId,firstBtn);
             updateBtnShow(v.getId(),Integer.parseInt(v.getTag().toString()));
             firstBtn = 0;
-
+            tv.setText(GC.message);
         }
 
 

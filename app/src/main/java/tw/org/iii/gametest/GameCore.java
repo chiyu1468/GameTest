@@ -72,7 +72,7 @@ public class GameCore {
     gameReferee MrX;
 
     // 要傳遞出去的訊息
-    public String message;
+    public String message = "";
 
     // State Machine 用的參數
     final int state_Initial = 900;
@@ -105,6 +105,7 @@ public class GameCore {
                     break;
                 }
                 nowState = state_readyToStart;
+                message = "Wait Player Ready~";
                 // 到齊後 就繼續執行下一個 state
             case state_readyToStart:
                 Log.v("chiyu","state_readyToStart");// trailrun
@@ -114,6 +115,8 @@ public class GameCore {
                 // 分配完成後 就繼續執行下一個 state
             case state_PlayerTurn:
                 Log.v("chiyu","state_PlayerTurn");// trailrun
+                message = "Game Start!!!\n" +
+                        playerList.get(nowPlayerID).getName() + " take first move";
                 // 等玩家給指令
                 // state 的改變放在 playerMove 裡
                 break;
@@ -123,6 +126,7 @@ public class GameCore {
                 if(MrX.judge(gameCheckerBoard) == -1) nowState = state_End;
                 else {
                     nowPlayerID = (nowPlayerID % playerList.size()) + 1;
+                    message = playerList.get(nowPlayerID).getName() + "'s turn.";
                     nowState = state_PlayerTurn;
                     break;
                 }
@@ -170,9 +174,12 @@ public class GameCore {
     // =====================================
     // 給玩家使用的指令
     // 呼叫狀態機 以及處理錯誤訊息
-    void GO() {
+    String GO() {
         StateMachine();
         ProcessErrorCode();
+
+        if(nowPlayerID > 0) return playerList.get(nowPlayerID).getName();
+        return "";
     }
     // 玩家加入
     boolean addPlayer(String name) {
@@ -624,7 +631,7 @@ public class GameCore {
                 }
             }
             // 全部都一樣 勝利
-            if(notSameGrid == 0) {
+            if(notSameGrid == 0 && boardFaction[grid] != 0) {
                 message = playerList.get((int)boardFaction[grid]).getName() + " is Winner!!!";
                 return true;
             }
@@ -646,7 +653,7 @@ public class GameCore {
                 }
             }
             // 全部都一樣 勝利
-            if(notSameGrid == 0) {
+            if(notSameGrid == 0 && boardFaction[grid] != 0) {
                 // Log.v("chiyu","" + playerList.get((int)boardFaction[grid]).getName());
                 message = playerList.get((int)boardFaction[grid]).getName() + " is Winner!!!";
                 return true;
@@ -674,7 +681,7 @@ public class GameCore {
                     }
                 }
                 // 全部都一樣 勝利
-                if(notSameGrid == 0) {
+                if(notSameGrid == 0 && boardFaction[grid] != 0) {
                     message = playerList.get((int)boardFaction[grid]).getName() + " is Winner!!!";
                     return true;
                 }
@@ -703,8 +710,8 @@ public class GameCore {
                     }
                 }
                 // 全部都一樣 勝利
-                if(notSameGrid == 0) {
-                    message = playerList.get((int)boardFaction[grid]).getName() + " is Winner!!!";
+                if(notSameGrid == 0 && boardFaction[grid] != 0) {
+                    message += playerList.get((int)boardFaction[grid]).getName() + " is Winner!!!";
                     return true;
                 }
                 // 有不一樣的 就是 gamePoint

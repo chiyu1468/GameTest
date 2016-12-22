@@ -197,11 +197,11 @@
         android:onClick="test1"
         android:text="GO"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="test2"
-        android:text="test"/>
+    <!--<Button-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:onClick="test2"-->
+        <!--android:text="test"/>-->
 
 
     <TextView
